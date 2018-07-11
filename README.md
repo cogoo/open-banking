@@ -30,6 +30,10 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/` on any bro
 
 ### General Comments
 
-There are two tabs / pages. Nearby (follows the requirements for the test), Map View (for bonus points! Includes Natwest as a second bank). These pages were built as if they were standalone, primarily so you would see how I would code what was asked of in the requirements; otherwise I would have coded it slightly differently (e.g. used a shared service between the two for the location and would have made some common components)
+There are two tabs / pages. Nearby (follows the requirements for the test), Map View (for bonus points! Includes Natwest as a second bank). These pages were built as if they were standalone, primarily so you would see how I would code what was asked of in the requirements; otherwise I would have coded it slightly differently (e.g. used a shared service between the two for the location and would have made some common components).
+
+Additionaly, there are a number of things that could have been done if this was to be an actual feature, just to name one; Having a fall-back if someone doesn't allow the geolocation permission. Would show error message and / or use their IP address to get a rough location.
+
+> There are some further commments in the code that highlights certain decisions and suggestions.
 
 __Map View__: The map view shows the nearest 30 ATMs (from Barclays & Natwest) around you (initial start position). 
