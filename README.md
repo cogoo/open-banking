@@ -1,7 +1,5 @@
 # OpenBanking
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
-
 [View Demo](https://project-o-x.firebaseapp.com/)
 
 > ** Caveat: The OpenBanking API doesn't allows Cross Domanin Requests ([see cors](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)); so had to use a some-what unstable web proxy. Still should work 95% of the time. 
@@ -24,9 +22,9 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/` on any bro
 
 ### Dependencies
 
-1. __lodash__ ([lodash](https://lodash.com/docs/4.17.10)) - Reason: Allows for more readable code, and offers a shorthand for some trivial calculations / operations
+1. __lodash__ ([lodash](https://lodash.com/docs/4.17.10)) - Allows for more readable code, and offers a shorthand for some trivial calculations / operations
 
-2. __@agm/core__ ([Angular Goolge Maps](https://angular-maps.com/)) - Reason: Prebuilt components and directives for common Goolge Maps elements.
+2. __@agm/core__ ([Angular Goolge Maps](https://angular-maps.com/)) - Prebuilt components and directives for common Goolge Maps elements.
 
 ### General Comments
 
