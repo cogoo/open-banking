@@ -1,0 +1,50 @@
+<section main>
+
+  <div class="loader" *ngIf="!nearestAtms; else showMap">
+    <div class="sk-folding-cube">
+      <div class="sk-cube1 sk-cube"></div>
+      <div class="sk-cube2 sk-cube"></div>
+      <div class="sk-cube4 sk-cube"></div>
+      <div class="sk-cube3 sk-cube"></div>
+    </div>
+    <h6 [innerHTML]="loadingStatus"></h6>
+  </div>
+
+  <!-- <ul>
+    <li *ngFor="let item of [{name:'Natwest'},{name:'Halifax'},{name:'MetroBank'}]">
+      {{item.name}}
+    </li>
+  </ul> -->
+  <ng-template #showMap>
+
+    <agm-map [zoom]="14" disableDefaultUI="true" [styles]="mapStyles" [latitude]="usersLocation.lat" [longitude]="usersLocation.lng">
+      <agm-marker [zIndex]="4" [latitude]="usersLocation.lat" [longitude]="usersLocation.lng">
+        <agm-info-window>
+          <h6>
+            Howdy!
+          </h6>
+          <p>You are here!</p>
+        </agm-info-window>
+      </agm-marker>
+
+      <agm-marker *ngFor="let atm of nearestAtms" [iconUrl]="atm.IconUrl" [latitude]="atm?.Latitude" [longitude]="atm?.Longitude">
+        <agm-info-window>
+          <h6>{{atm?.Brand}}
+            <span class="distance"> <img src="assets/logo/marker.svg" alt=""> {{atm?.distance}}</span>
+          </h6>
+          <p>{{atm?.Location?.PostalAddress?.BuildingNumber}} {{atm?.Location?.PostalAddress?.AddressLine?.join(', ')}}</p>
+          <p>{{atm?.Location?.PostalAddress?.StreetName}}</p>
+          <p>{{atm?.Location?.PostalAddress?.PostCode}}</p>
+          <p>{{atm?.Location?.PostalAddress?.TownName}}</p>
+          <p>{{atm?.Location?.PostalAddress?.Country}}</p>
+        </agm-info-window>
+      </agm-marker>
+
+    </agm-map>
+
+  </ng-template>
+
+
+  <!-- <router-outlet></router-outlet> -->
+
+</section>

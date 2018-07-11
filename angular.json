@@ -27,6 +27,8 @@
               "src/assets"
             ],
             "styles": [
+              "src/normalize.css",
+              "src/skeleton.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -54,7 +56,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "my-bank:build"
+            "browserTarget": "my-bank:build",
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {

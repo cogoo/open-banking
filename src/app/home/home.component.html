@@ -1,0 +1,40 @@
+<section main>
+
+  <div class="loader" *ngIf="!nearestAtms; else showAtms">
+    <div class="sk-folding-cube">
+      <div class="sk-cube1 sk-cube"></div>
+      <div class="sk-cube2 sk-cube"></div>
+      <div class="sk-cube4 sk-cube"></div>
+      <div class="sk-cube3 sk-cube"></div>
+    </div>
+    <h6 [innerHTML]="loadingStatus"></h6>
+  </div>
+
+  <ng-template #showAtms>
+    <div class="container">
+      <h4>Nearby ATMs</h4>
+      <p>Here is a view of your nearest ATMs</p>
+      <div class="row container-inner" [@listAnimation]="nearestAtms.length">
+        <div class="four" *ngFor="let atm of nearestAtms">
+          <div class="list-item">
+            <h6>Barclays Bank
+              <span class="distance"> <img src="assets/logo/marker.svg" alt=""> {{atm?.distance}}</span>
+            </h6>
+            <p>{{atm?.Location?.PostalAddress?.BuildingNumber}} {{atm?.Location?.PostalAddress?.AddressLine?.join(', ')}}</p>
+            <p>{{atm?.Location?.PostalAddress?.StreetName}}</p>
+            <p>{{atm?.Location?.PostalAddress?.PostCode}}</p>
+            <p>{{atm?.Location?.PostalAddress?.TownName}}</p>
+            <p>{{atm?.Location?.PostalAddress?.Country}}</p>
+
+            <a class="button" href="https://www.google.com/maps/search/?api=1&query={{atm?.Location?.PostalAddress?.GeoLocation?.GeographicCoordinates.Latitude}},{{atm?.Location?.PostalAddress?.GeoLocation?.GeographicCoordinates.Longitude}}"
+              target="_blank">
+              View On Map
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+
+</section>

@@ -1,0 +1,20 @@
+{
+    "/barclays-api": {
+        "target": "https://atlas.api.barclays/open-banking/v2.1",
+        "secure": true,
+        "pathRewrite": {
+            "^/barclays-api": ""
+        },
+        "changeOrigin": true,
+        "logLevel": "debug"
+    },
+    "/natwest-api": {
+        "target": "https://openapi.natwest.com/open-banking/v2.1",
+        "secure": true,
+        "pathRewrite": {
+            "^/natwest-api": ""
+        },
+        "changeOrigin": true,
+        "logLevel": "debug"
+    }
+}
