@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -6,8 +7,8 @@ import { Injectable } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   url: any = {
-    barclaysAtm: '/barclays-api',
-    natwestAtm: '/natwest-api'
+    barclaysAtm: environment.barclaysApi,
+    natwestAtm: environment.natwestApi
   };
 
 

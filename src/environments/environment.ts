@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  googleMapsKey: 'AIzaSyBRWMbM8HnP7LVkkoD69MGXb56EYCO3XMg'
+  googleMapsKey: 'AIzaSyBRWMbM8HnP7LVkkoD69MGXb56EYCO3XMg',
+  barclaysApi: '/barclays-api',
+  natwestApi: '/natwest-api'
 };
 
 /*
