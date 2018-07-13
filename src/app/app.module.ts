@@ -1,8 +1,8 @@
-import { environment } from './../environments/environment';
+import { CoreModule } from './core-components/core-module.module';
+import { environment } from '../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './router/app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,6 +22,7 @@ import { AgmCoreModule } from '@agm/core';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    CoreModule,
     AgmCoreModule.forRoot({
       apiKey: environment.googleMapsKey
     })
@@ -29,6 +30,7 @@ import { AgmCoreModule } from '@agm/core';
   ],
   providers: [
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: []
 })
 export class AppModule { }
