@@ -1,4 +1,4 @@
-import { ATMElement } from './../interfaces/atm';
+import { ATMElement } from '../interfaces/atm';
 import { Injectable } from '@angular/core';
 import { Observable, Observer, Subject, BehaviorSubject, ReplaySubject } from 'rxjs';
 

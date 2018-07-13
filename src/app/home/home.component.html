@@ -1,14 +1,6 @@
 <section main>
 
-  <div class="loader" *ngIf="!nearestAtms; else showAtms">
-    <div class="sk-folding-cube">
-      <div class="sk-cube1 sk-cube"></div>
-      <div class="sk-cube2 sk-cube"></div>
-      <div class="sk-cube4 sk-cube"></div>
-      <div class="sk-cube3 sk-cube"></div>
-    </div>
-    <h6 [innerHTML]="loadingStatus"></h6>
-  </div>
+  <app-loader [loadingStatus]="loadingStatus" *ngIf="!nearestAtms; else showAtms"></app-loader>
 
   <ng-template #showAtms>
     <div class="container">

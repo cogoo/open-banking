@@ -1,8 +1,8 @@
-import { GeoService } from './../services/geo.service';
+import { GeoService } from '../services/geo.service';
 import { takeUntil } from 'rxjs/operators';
 import { inject } from '@angular/core/testing';
-import { ATM, Brand, ATMElement } from './../interfaces/atm';
-import { ApiService } from './../services/api.service';
+import { ATM, Brand, ATMElement } from '../interfaces/atm';
+import { ApiService } from '../services/api.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, BehaviorSubject, combineLatest, Observable } from 'rxjs';
 
