@@ -21,7 +21,7 @@ jobs:
     steps:
       - checkout
       - run: npm install
-      - run: npm run build --aot --prod
+      - run: npm run build-ci
       - run: ./node_modules/.bin/firebase deploy --only hosting --token=$FIREBASE_DEPLOY_TOKEN
 
 workflows:
