@@ -10,7 +10,7 @@
   </ul> -->
   <ng-template #showMap>
 
-    <agm-map [zoom]="14" disableDefaultUI="true" [styles]="mapStyles" [latitude]="usersLocation.lat" [longitude]="usersLocation.lng">
+    <agm-map [zoom]="14" disableDefaultUI="true" [latitude]="usersLocation.lat" [longitude]="usersLocation.lng">
       <agm-marker [zIndex]="4" [latitude]="usersLocation.lat" [longitude]="usersLocation.lng">
         <agm-info-window>
           <h6>
