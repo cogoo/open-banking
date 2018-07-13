@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/cogoo/open-banking.svg?style=svg)](https://circleci.com/gh/cogoo/open-banking)
+[![CircleCI](https://circleci.com/gh/cogoo/open-banking.svg?style=shield)](https://circleci.com/gh/cogoo/open-banking)
 
 # OpenBanking
 
