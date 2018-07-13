@@ -9,7 +9,7 @@ import { Location, PopStateEvent } from '@angular/common';
 })
 export class AppComponent implements OnInit {
 
-  private _lastPoppedUrl: string;
+  private _lastPoppedUrl = '';
   private _yScrollStack = [];
 
   constructor(

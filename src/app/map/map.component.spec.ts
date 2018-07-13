@@ -1,3 +1,6 @@
+import { RouterTestingModule } from '@angular/router/testing';
+import { environment } from './../../environments/environment.prod';
+import { AgmCoreModule } from '@agm/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MapComponent } from './map.component';
@@ -8,9 +11,15 @@ describe('MapComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MapComponent ]
+      imports: [
+        RouterTestingModule,
+        AgmCoreModule.forRoot({
+          apiKey: environment.googleMapsKey
+        })
+      ],
+      declarations: [MapComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
