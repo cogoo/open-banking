@@ -1,3 +1,4 @@
+import { GeoService } from './../services/geo.service';
 import { takeUntil } from 'rxjs/operators';
 import { inject } from '@angular/core/testing';
 import { ATM, Brand, ATMElement } from './../interfaces/atm';
@@ -350,7 +351,8 @@ export class BanksComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private api: ApiService
+    private api: ApiService,
+    private geo: GeoService
   ) { }
 
   ngOnInit() {
@@ -369,20 +371,23 @@ export class BanksComponent implements OnInit, OnDestroy {
   }
 
   getUserLocation() {
-    navigator.geolocation.getCurrentPosition((position) => {
+    // this.geo.getUserLocation({
+    //   enableHighAccuracy: false,
+    //   timeout: 10000
+    // })
+    this.geo.geoLocation$
+      .pipe(
+        takeUntil(this.destroys$)
+      )
+      .subscribe((position) => {
 
-      this.usersLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
-      this.getClosestATM(this.usersLocation);
-      // push update to loading status
-      this.loadingStatus$.next('Finding nearest Barclays and Natwest ATMs ...');
-    }, () => {
-      // if timeout, do fallback? using IP address?
-      this.loadingStatus$.next('Your position could not be determined, please refresh and try again');
-    }, {
-        enableHighAccuracy: false,
-        timeout: 10000
-      }
-    );
+        this.usersLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
+        this.getClosestATM(this.usersLocation);
+        // push update to loading status
+        this.loadingStatus$.next('Finding Barclays and Natwest ATMs ...');
+      }, (err) => {
+        this.loadingStatus$.next('Your position could not be determined, please refresh and try again');
+      });
   }
 
   getClosestATM(usersLocation: { lat: number, lng: number }) {
@@ -401,69 +406,12 @@ export class BanksComponent implements OnInit, OnDestroy {
       .subscribe((res: any) => {
         const _barclaysAtms = (<ATM>res[0]).data[0].Brand[0];
         const _natwestAtms = (<ATM>res[1]).data[0].Brand[1];
-        const _nearestBarclaysAtms = this.applyHaversine(usersLocation, _barclaysAtms.BrandName, _barclaysAtms.ATM);
-        const _nearestNatwestAtms = this.applyHaversine(usersLocation, _natwestAtms.BrandName, _natwestAtms.ATM);
+        const _nearestBarclaysAtms = this.geo.applyHaversine(usersLocation, _barclaysAtms.ATM, _barclaysAtms.BrandName);
+        const _nearestNatwestAtms = this.geo.applyHaversine(usersLocation, _natwestAtms.ATM, _natwestAtms.BrandName);
 
         this.nearestAtms = orderBy(_nearestBarclaysAtms.concat(_nearestNatwestAtms), ['distance'], ['asc']).slice(0, 30);
 
       });
-  }
-
-  applyHaversine(usersLocation: { lat: number, lng: number }, brand: string, locations: ATMElement[]) {
-
-    locations.map((location) => {
-
-      const placeLocation = {
-        lat: location.Location.PostalAddress.GeoLocation.GeographicCoordinates.Latitude,
-        lng: location.Location.PostalAddress.GeoLocation.GeographicCoordinates.Longitude
-      };
-
-      location.distance = this.getDistanceBetweenPoints(
-        usersLocation,
-        placeLocation,
-        'miles'
-      ).toFixed(2);
-
-      location.Latitude = parseFloat(placeLocation.lat);
-      location.Longitude = parseFloat(placeLocation.lng);
-      location.Brand = brand;
-      location.IconUrl = brand.indexOf('Barclays') >= 0 ? 'assets/logo/barclays_marker.svg' : 'assets/logo/natwest_marker.png';
-
-
-    });
-
-
-    return locations;
-  }
-
-  getDistanceBetweenPoints(start, end, units) {
-
-    const earthRadius = {
-      miles: 3958.8,
-      km: 6371
-    };
-
-    const R = earthRadius[units || 'miles'];
-    const lat1 = start.lat;
-    const lon1 = start.lng;
-    const lat2 = end.lat;
-    const lon2 = end.lng;
-
-    const dLat = this.toRad((lat2 - lat1));
-    const dLon = this.toRad((lon2 - lon1));
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(this.toRad(lat1)) * Math.cos(this.toRad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const d = R * c;
-
-    return d;
-
-  }
-
-  toRad(x) {
-    return x * Math.PI / 180;
   }
 
   ngOnDestroy() {
@@ -471,6 +419,5 @@ export class BanksComponent implements OnInit, OnDestroy {
     this.destroys$.unsubscribe();
 
   }
-
 
 }

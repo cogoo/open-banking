@@ -1,5 +1,4 @@
 import { environment } from './../environments/environment';
-import { ApiService } from './services/api.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -29,7 +28,6 @@ import { AgmCoreModule } from '@agm/core';
 
   ],
   providers: [
-    ApiService
   ],
   bootstrap: [AppComponent]
 })

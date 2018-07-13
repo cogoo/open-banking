@@ -1,4 +1,5 @@
-import { takeUntil } from 'rxjs/operators';
+import { GeoService } from './../services/geo.service';
+import { takeUntil, take } from 'rxjs/operators';
 import { inject } from '@angular/core/testing';
 import { ATM, Brand, ATMElement } from './../interfaces/atm';
 import { ApiService } from './../services/api.service';
@@ -41,7 +42,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   loadingStatus: string;
 
   constructor(
-    private api: ApiService
+    private api: ApiService,
+    private geo: GeoService
   ) { }
 
   ngOnInit() {
@@ -60,18 +62,25 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getUserLocation() {
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.getClosestATM({ lat: position.coords.latitude, lng: position.coords.longitude });
-      // push update to loading status
-      this.loadingStatus$.next('Finding Barclays ATMs ...');
-    }, () => {
-      // if timeout, do fallback? using IP address?
-      this.loadingStatus$.next('Your position could not be determined, please refresh and try again');
-    }, {
-        enableHighAccuracy: false,
-        timeout: 10000
-      }
-    );
+
+    // this.geo.getUserLocation({
+    //   enableHighAccuracy: false,
+    //   timeout: 10000
+    // })
+    this.geo.geoLocation$
+      .pipe(
+        takeUntil(this.destroys$)
+      )
+      .subscribe((position) => {
+        console.log('position: ', position);
+        this.getClosestATM({ lat: position.coords.latitude, lng: position.coords.longitude });
+        // push update to loading status
+        this.loadingStatus$.next('Finding Barclays ATMs ...');
+      }, (err) => {
+        this.loadingStatus$.next('Your position could not be determined, please refresh and try again');
+      });
+
+
   }
 
   getClosestATM(usersLocation: { lat: number, lng: number }) {
@@ -83,64 +92,14 @@ export class HomeComponent implements OnInit, OnDestroy {
       )
       .subscribe((res: any) => {
         const _barclaysAtm = (<ATM>res).data[0].Brand[0];
-        const _nearestAtms = this.applyHaversine(usersLocation, _barclaysAtm.ATM);
+        const _nearestAtms = this.geo.applyHaversine(usersLocation, _barclaysAtm.ATM);
         this.nearestAtms = orderBy(_nearestAtms, ['distance'], ['asc']).slice(0, 10);
       });
-  }
-
-  applyHaversine(usersLocation: { lat: number, lng: number }, locations: ATMElement[]) {
-
-    locations.map((location) => {
-
-      const placeLocation = {
-        lat: location.Location.PostalAddress.GeoLocation.GeographicCoordinates.Latitude,
-        lng: location.Location.PostalAddress.GeoLocation.GeographicCoordinates.Longitude
-      };
-
-      location.distance = this.getDistanceBetweenPoints(
-        usersLocation,
-        placeLocation,
-        'miles'
-      ).toFixed(2);
-    });
-
-    return locations;
-  }
-
-  getDistanceBetweenPoints(start, end, units) {
-
-    const earthRadius = {
-      miles: 3958.8,
-      km: 6371
-    };
-
-    const R = earthRadius[units || 'miles'];
-    const lat1 = start.lat;
-    const lon1 = start.lng;
-    const lat2 = end.lat;
-    const lon2 = end.lng;
-
-    const dLat = this.toRad((lat2 - lat1));
-    const dLon = this.toRad((lon2 - lon1));
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(this.toRad(lat1)) * Math.cos(this.toRad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const d = R * c;
-
-    return d;
-
-  }
-
-  toRad(x) {
-    return x * Math.PI / 180;
   }
 
   ngOnDestroy() {
     this.destroys$.next(false);
     this.destroys$.unsubscribe();
-
   }
 
 }
