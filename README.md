@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/cogoo/open-banking.svg?style=svg)](https://circleci.com/gh/cogoo/open-banking)
+
 # OpenBanking
 
 [View Demo](https://project-o-x.firebaseapp.com/)
