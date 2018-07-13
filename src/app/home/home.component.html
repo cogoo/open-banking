@@ -17,11 +17,10 @@
             <p>{{atm?.Location?.PostalAddress?.PostCode}}</p>
             <p>{{atm?.Location?.PostalAddress?.TownName}}</p>
             <p>{{atm?.Location?.PostalAddress?.Country}}</p>
-
-            <a class="button" href="https://www.google.com/maps/search/?api=1&query={{atm?.Location?.PostalAddress?.GeoLocation?.GeographicCoordinates.Latitude}},{{atm?.Location?.PostalAddress?.GeoLocation?.GeographicCoordinates.Longitude}}"
+            <button class="button" routerLink="/map/atm/{{atm?.Location?.PostalAddress?.GeoLocation?.GeographicCoordinates.Latitude}}/{{atm?.Location?.PostalAddress?.GeoLocation?.GeographicCoordinates.Longitude}}"
               target="_blank">
               View On Map
-            </a>
+            </button>
           </div>
         </div>
       </div>

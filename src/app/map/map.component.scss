@@ -1,0 +1,28 @@
+agm-map {
+    margin-top: var(--nav-height);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - var(--nav-height));
+    h6 {
+        margin-bottom: 4px;
+        .distance {
+            float: right;
+            opacity: 0.4;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.3rem;
+            img {
+                height: 20px;
+                vertical-align: middle;
+            }
+        }
+    }
+    p {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        &:empty {
+            display: none;
+        }
+    }
+}

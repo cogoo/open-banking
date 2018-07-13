@@ -8,11 +8,13 @@ const routes: Routes = [
   {
     path: 'banks',
     component: BanksComponent
-  }
+  },
+  { path: 'map', loadChildren: './lazy-routing.module#LazyRoutingModule' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
