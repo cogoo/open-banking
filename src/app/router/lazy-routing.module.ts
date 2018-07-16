@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: 'atm/:lat/:lng', component: MapComponent }
+  { path: ':lat/:lng', component: MapComponent }
 ];
 
 @NgModule({

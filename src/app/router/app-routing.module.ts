@@ -9,7 +9,7 @@ const routes: Routes = [
     path: 'banks',
     component: BanksComponent
   },
-  { path: 'map', loadChildren: './lazy-routing.module#LazyRoutingModule' }
+  { path: 'atm', loadChildren: './lazy-routing.module#LazyRoutingModule' }
 ];
 
 @NgModule({
