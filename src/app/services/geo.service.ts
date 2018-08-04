@@ -29,10 +29,18 @@ export class GeoService {
 
     locations.map((location) => {
 
+      // const placeLocation = {
+      //   lat: location.Location.PostalAddress.GeoLocation.GeographicCoordinates.Latitude,
+      //   lng: location.Location.PostalAddress.GeoLocation.GeographicCoordinates.Longitude
+      // };
+
+      const { GeographicCoordinates: geoPosition } = location.Location.PostalAddress.GeoLocation;
+
       const placeLocation = {
-        lat: location.Location.PostalAddress.GeoLocation.GeographicCoordinates.Latitude,
-        lng: location.Location.PostalAddress.GeoLocation.GeographicCoordinates.Longitude
+        lat: geoPosition.Latitude,
+        lng: geoPosition.Longitude
       };
+
 
       location.distance = this.getDistanceBetweenPoints(
         usersLocation,
